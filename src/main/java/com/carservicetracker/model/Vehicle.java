@@ -7,50 +7,53 @@ import java.util.List;
 
 
 /**
- * The persistent class for the VEHICLE database table.
+ * The persistent class for the vehicle database table.
  * 
  */
 @Entity
-@Table(name="VEHICLE")
 @NamedQuery(name="Vehicle.findAll", query="SELECT v FROM Vehicle v")
 public class Vehicle implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="vehicle_id")
+	@Column(name="VEHICLE_ID")
 	private Long vehicleId;
 
-	@Column(name="average_fuel_consumption")
-	private String averageFuelConsumption;
+	@Column(name="AVERAGE_FUEL_CONSUMPTION")
+	private BigDecimal averageFuelConsumption;
 
-	@Column(name="distance_driven")
+	@Column(name="DISTANCE_DRIVEN")
 	private BigDecimal distanceDriven;
 
-	@Column(name="engine_power")
+	@Column(name="ENGINE_POWER")
 	private int enginePower;
 
-	@Column(name="engine_size")
-	private String engineSize;
+	@Column(name="ENGINE_SIZE")
+	private BigDecimal engineSize;
 
-	@Column(name="production_year")
+	@Column(name="PRODUCTION_YEAR")
 	private String productionYear;
 
 	private String registration;
+
+	//bi-directional many-to-one association to Service
+	@OneToMany(mappedBy="vehicle")
+	private List<Service> services;
 
 	//bi-directional many-to-one association to UserVehicle
 	@OneToMany(mappedBy="vehicle")
 	private List<UserVehicle> userVehicles;
 
-	//bi-directional many-to-one association to FuelType
-	@ManyToOne
-	@JoinColumn(name="fuel_type_id")
-	private FuelType fuelType;
-
 	//bi-directional many-to-one association to VehicleModel
 	@ManyToOne
-	@JoinColumn(name="vehicle_model_id")
+	@JoinColumn(name="VEHICLE_MODEL_ID")
 	private VehicleModel vehicleModel;
+
+	//bi-directional many-to-one association to FuelType
+	@ManyToOne
+	@JoinColumn(name="FUEL_TYPE_ID")
+	private FuelType fuelType;
 
 	public Vehicle() {
 	}
@@ -63,11 +66,11 @@ public class Vehicle implements Serializable {
 		this.vehicleId = vehicleId;
 	}
 
-	public String getAverageFuelConsumption() {
+	public BigDecimal getAverageFuelConsumption() {
 		return this.averageFuelConsumption;
 	}
 
-	public void setAverageFuelConsumption(String averageFuelConsumption) {
+	public void setAverageFuelConsumption(BigDecimal averageFuelConsumption) {
 		this.averageFuelConsumption = averageFuelConsumption;
 	}
 
@@ -87,11 +90,11 @@ public class Vehicle implements Serializable {
 		this.enginePower = enginePower;
 	}
 
-	public String getEngineSize() {
+	public BigDecimal getEngineSize() {
 		return this.engineSize;
 	}
 
-	public void setEngineSize(String engineSize) {
+	public void setEngineSize(BigDecimal engineSize) {
 		this.engineSize = engineSize;
 	}
 
@@ -109,6 +112,28 @@ public class Vehicle implements Serializable {
 
 	public void setRegistration(String registration) {
 		this.registration = registration;
+	}
+
+	public List<Service> getServices() {
+		return this.services;
+	}
+
+	public void setServices(List<Service> services) {
+		this.services = services;
+	}
+
+	public Service addService(Service service) {
+		getServices().add(service);
+		service.setVehicle(this);
+
+		return service;
+	}
+
+	public Service removeService(Service service) {
+		getServices().remove(service);
+		service.setVehicle(null);
+
+		return service;
 	}
 
 	public List<UserVehicle> getUserVehicles() {
@@ -133,20 +158,20 @@ public class Vehicle implements Serializable {
 		return userVehicle;
 	}
 
-	public FuelType getFuelType() {
-		return this.fuelType;
-	}
-
-	public void setFuelType(FuelType fuelType) {
-		this.fuelType = fuelType;
-	}
-
 	public VehicleModel getVehicleModel() {
 		return this.vehicleModel;
 	}
 
 	public void setVehicleModel(VehicleModel vehicleModel) {
 		this.vehicleModel = vehicleModel;
+	}
+
+	public FuelType getFuelType() {
+		return this.fuelType;
+	}
+
+	public void setFuelType(FuelType fuelType) {
+		this.fuelType = fuelType;
 	}
 
 }

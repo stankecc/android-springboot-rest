@@ -6,21 +6,21 @@ import java.util.List;
 
 
 /**
- * The persistent class for the SERVICE_TYPE database table.
+ * The persistent class for the service_type database table.
  * 
  */
 @Entity
-@Table(name="SERVICE_TYPE")
+@Table(name="service_type")
 @NamedQuery(name="ServiceType.findAll", query="SELECT s FROM ServiceType s")
 public class ServiceType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="service_type_id")
+	@Column(name="SERVICE_TYPE_ID")
 	private Long serviceTypeId;
 
-	@Column(name="service_type_name")
+	@Column(name="SERVICE_TYPE_NAME")
 	private String serviceTypeName;
 
 	//bi-directional many-to-one association to Service

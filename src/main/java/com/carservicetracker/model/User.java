@@ -6,37 +6,32 @@ import java.util.List;
 
 
 /**
- * The persistent class for the USER database table.
+ * The persistent class for the user database table.
  * 
  */
 @Entity
-@Table(name="USER")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_id")
+	@Column(name="USER_ID")
 	private Long userId;
 
 	private String email;
 
-	@Column(name="first_name")
+	@Column(name="FIRST_NAME")
 	private String firstName;
 
-	@Column(name="last_name")
+	@Column(name="LAST_NAME")
 	private String lastName;
 
 	private String password;
 
-	//bi-directional many-to-one association to Service
+	//bi-directional many-to-one association to UserRole
 	@OneToMany(mappedBy="user")
-	private List<Service> services;
-
-	//bi-directional many-to-one association to UserVehicle
-	@OneToMany(mappedBy="user")
-	private List<UserVehicle> userVehicles;
+	private List<UserRole> userRoles;
 
 	public User() {
 	}
@@ -81,48 +76,26 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public List<Service> getServices() {
-		return this.services;
+	public List<UserRole> getUserRoles() {
+		return this.userRoles;
 	}
 
-	public void setServices(List<Service> services) {
-		this.services = services;
+	public void setUserRoles(List<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
-	public Service addService(Service service) {
-		getServices().add(service);
-		service.setUser(this);
+	public UserRole addUserRole(UserRole userRole) {
+		getUserRoles().add(userRole);
+		userRole.setUser(this);
 
-		return service;
+		return userRole;
 	}
 
-	public Service removeService(Service service) {
-		getServices().remove(service);
-		service.setUser(null);
+	public UserRole removeUserRole(UserRole userRole) {
+		getUserRoles().remove(userRole);
+		userRole.setUser(null);
 
-		return service;
-	}
-
-	public List<UserVehicle> getUserVehicles() {
-		return this.userVehicles;
-	}
-
-	public void setUserVehicles(List<UserVehicle> userVehicles) {
-		this.userVehicles = userVehicles;
-	}
-
-	public UserVehicle addUserVehicle(UserVehicle userVehicle) {
-		getUserVehicles().add(userVehicle);
-		userVehicle.setUser(this);
-
-		return userVehicle;
-	}
-
-	public UserVehicle removeUserVehicle(UserVehicle userVehicle) {
-		getUserVehicles().remove(userVehicle);
-		userVehicle.setUser(null);
-
-		return userVehicle;
+		return userRole;
 	}
 
 }

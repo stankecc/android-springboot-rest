@@ -6,21 +6,21 @@ import java.util.List;
 
 
 /**
- * The persistent class for the VEHICLE_TYPE database table.
+ * The persistent class for the vehicle_type database table.
  * 
  */
 @Entity
-@Table(name="VEHICLE_TYPE")
+@Table(name="vehicle_type")
 @NamedQuery(name="VehicleType.findAll", query="SELECT v FROM VehicleType v")
 public class VehicleType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="vehicle_type_id")
+	@Column(name="VEHICLE_TYPE_ID")
 	private Long vehicleTypeId;
 
-	@Column(name="vehicle_type_name")
+	@Column(name="VEHICLE_TYPE_NAME")
 	private String vehicleTypeName;
 
 	//bi-directional many-to-one association to VehicleModel

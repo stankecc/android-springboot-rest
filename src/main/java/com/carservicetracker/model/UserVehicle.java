@@ -6,18 +6,18 @@ import java.util.List;
 
 
 /**
- * The persistent class for the USER_VEHICLE database table.
+ * The persistent class for the user_vehicle database table.
  * 
  */
 @Entity
-@Table(name="USER_VEHICLE")
+@Table(name="user_vehicle")
 @NamedQuery(name="UserVehicle.findAll", query="SELECT u FROM UserVehicle u")
 public class UserVehicle implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_vehicle_id")
+	@Column(name="USER_VEHICLE_ID")
 	private Long userVehicleId;
 
 	private byte active;
@@ -26,15 +26,15 @@ public class UserVehicle implements Serializable {
 	@OneToMany(mappedBy="userVehicle")
 	private List<Service> services;
 
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
-
 	//bi-directional many-to-one association to Vehicle
 	@ManyToOne
-	@JoinColumn(name="vehicle_id")
+	@JoinColumn(name="VEHICLE_ID")
 	private Vehicle vehicle;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
+	private User user;
 
 	public UserVehicle() {
 	}
@@ -77,20 +77,20 @@ public class UserVehicle implements Serializable {
 		return service;
 	}
 
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Vehicle getVehicle() {
 		return this.vehicle;
 	}
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

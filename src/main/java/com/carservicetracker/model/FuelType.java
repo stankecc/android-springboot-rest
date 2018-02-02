@@ -6,21 +6,21 @@ import java.util.List;
 
 
 /**
- * The persistent class for the FUEL_TYPE database table.
+ * The persistent class for the fuel_type database table.
  * 
  */
 @Entity
-@Table(name="FUEL_TYPE")
+@Table(name="fuel_type")
 @NamedQuery(name="FuelType.findAll", query="SELECT f FROM FuelType f")
 public class FuelType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="fuel_type_id")
+	@Column(name="FUEL_TYPE_ID")
 	private Long fuelTypeId;
 
-	@Column(name="fuel_type_name")
+	@Column(name="FUEL_TYPE_NAME")
 	private String fuelTypeName;
 
 	//bi-directional many-to-one association to Vehicle

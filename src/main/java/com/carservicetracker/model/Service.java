@@ -3,47 +3,49 @@ package com.carservicetracker.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
 
 
 /**
- * The persistent class for the SERVICE database table.
+ * The persistent class for the service database table.
  * 
  */
 @Entity
-@Table(name="SERVICE")
 @NamedQuery(name="Service.findAll", query="SELECT s FROM Service s")
 public class Service implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="service_id")
+	@Column(name="SERVICE_ID")
 	private Long serviceId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="date_performed")
-	private Date datePerformed;
+	@Column(name="DATE_PERFORMED")
+	private String datePerformed;
 
-	@Column(name="distance_passed")
+	@Column(name="DISTANCE_PASSED")
 	private BigDecimal distancePassed;
 
 	private BigDecimal price;
 
-	//bi-directional many-to-one association to ServiceType
+	//bi-directional many-to-one association to Vehicle
 	@ManyToOne
-	@JoinColumn(name="service_type_id")
-	private ServiceType serviceType;
+	@JoinColumn(name="VEHICLE_ID")
+	private Vehicle vehicle;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="USER_ID")
 	private User user;
 
 	//bi-directional many-to-one association to UserVehicle
 	@ManyToOne
-	@JoinColumn(name="user_vehicle_id")
+	@JoinColumn(name="USER_VEHICLE_ID")
 	private UserVehicle userVehicle;
+
+	//bi-directional many-to-one association to ServiceType
+	@ManyToOne
+	@JoinColumn(name="SERVICE_TYPE_ID")
+	private ServiceType serviceType;
 
 	public Service() {
 	}
@@ -56,11 +58,11 @@ public class Service implements Serializable {
 		this.serviceId = serviceId;
 	}
 
-	public Date getDatePerformed() {
+	public String getDatePerformed() {
 		return this.datePerformed;
 	}
 
-	public void setDatePerformed(Date datePerformed) {
+	public void setDatePerformed(String datePerformed) {
 		this.datePerformed = datePerformed;
 	}
 
@@ -80,12 +82,12 @@ public class Service implements Serializable {
 		this.price = price;
 	}
 
-	public ServiceType getServiceType() {
-		return this.serviceType;
+	public Vehicle getVehicle() {
+		return this.vehicle;
 	}
 
-	public void setServiceType(ServiceType serviceType) {
-		this.serviceType = serviceType;
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 
 	public User getUser() {
@@ -102,6 +104,14 @@ public class Service implements Serializable {
 
 	public void setUserVehicle(UserVehicle userVehicle) {
 		this.userVehicle = userVehicle;
+	}
+
+	public ServiceType getServiceType() {
+		return this.serviceType;
+	}
+
+	public void setServiceType(ServiceType serviceType) {
+		this.serviceType = serviceType;
 	}
 
 }
